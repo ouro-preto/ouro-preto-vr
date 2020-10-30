@@ -1,0 +1,25 @@
+{
+    "items": [
+        {
+            "prefab": "A",
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 10
+                },
+            "name": "Cubo",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "B",
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 10
+                },
+            "name": "Esfera",
+            "description": "Se liga na fundamentação histórica..."
+        }
+    ],
+    "prefabs": ["A", "B", "C", "D"]
+}
