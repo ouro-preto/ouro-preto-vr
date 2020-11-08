@@ -2,9 +2,10 @@
     "items": [
         {
             "prefab": "A",
+            "locked": true,
             "position": {
                 "x": 5,
-                "y": 0,
+                "y": -0.5,
                 "z": 10
                 },
             "name": "Cubo",
@@ -12,6 +13,7 @@
         },
         {
             "prefab": "B",
+            "locked": false,
             "position": {
                 "x": -5,
                 "y": 0,

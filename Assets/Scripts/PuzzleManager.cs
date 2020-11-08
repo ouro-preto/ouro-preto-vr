@@ -1,20 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class PuzzleManager : MonoBehaviour
 {
     const string k_FolderName = "TreasureHunt";
 
-    [Header("UI")]
-
     [SerializeField]
-    private GameObject m_Panel;
-
-    [SerializeField]
-    private Text m_NameText;
-
-    [SerializeField]
-    private Text m_DescriptionText;
+    private Dialogue m_Dialogue;
 
     public static PuzzleManager Instance { get; private set; }
 
@@ -34,19 +26,16 @@ public class PuzzleManager : MonoBehaviour
         foreach (var x in data.items)
         {
             var prefab = Resources.Load($"{k_FolderName}/{x.prefab}") as GameObject;
-            prefab.AddComponent<Treasure>();
-
             var instance = Instantiate(prefab, x.position, Quaternion.identity);
+
             instance.GetComponent<Treasure>().Setup(x.name, x.description);
+            if (x.locked) instance.AddComponent<LockToPoint>();
         }
     }
 
-    public void PickUp(Treasure treasure)
-    {
-        m_NameText.text = treasure.Name;
-        m_DescriptionText.text = treasure.Description;
-        m_Panel.SetActive(true);
-    }
+    public void PickUp(Treasure treasure) => m_Dialogue.PickUp(treasure);
+
+    public void DetachFromHand() => m_Dialogue.DetachFromHand();
 
     private static Data LoadJson(string filePath)
     {
@@ -58,6 +47,7 @@ public class PuzzleManager : MonoBehaviour
     private struct Item
     {
         public string prefab;
+        public bool locked;
         public Vector3 position;
         public string name;
         public string description;
