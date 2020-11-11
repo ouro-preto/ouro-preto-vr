@@ -8,6 +8,9 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField]
     private Dialogue m_Dialogue;
 
+    [SerializeField]
+    private GameObject m_Minimap;
+
     public static PuzzleManager Instance { get; private set; }
 
     private void Awake()
@@ -27,6 +30,7 @@ public class PuzzleManager : MonoBehaviour
         {
             var prefab = Resources.Load($"{k_FolderName}/{x.prefab}") as GameObject;
             var instance = Instantiate(prefab, x.position, Quaternion.identity);
+            Instantiate(m_Minimap, x.position, Quaternion.identity);
 
             instance.GetComponent<Treasure>().Setup(x.name, x.description);
             if (x.locked) instance.AddComponent<LockToPoint>();
