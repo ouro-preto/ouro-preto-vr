@@ -42,12 +42,20 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void AddItem(Sprite sprite, string label)
+    public void CreateTreasure(Sprite sprite, string label)
     {
         var instance = Instantiate(m_GridItem, m_GridLayout);
         var image = instance.GetComponentInChildren<Image>();
         var text = instance.GetComponentInChildren<Text>();
+
+        image.color = Color.black;
         image.sprite = sprite;
         text.text = label;
+    }
+
+    public void UpdateTreasure(int id, bool found = true)
+    {
+        var image = m_GridLayout.GetChild(id).GetComponentInChildren<Image>();
+        image.color = found ? Color.white : Color.black;
     }
 }

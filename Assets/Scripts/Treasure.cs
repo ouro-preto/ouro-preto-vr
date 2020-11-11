@@ -9,6 +9,8 @@ public class Treasure : MonoBehaviour
 {
     private Throwable m_Throwable;
 
+    public int Id { get; private set; }
+
     public string Name { get; private set; }
 
     public string Description { get; private set; }
@@ -48,8 +50,9 @@ public class Treasure : MonoBehaviour
         m_Timestamp = 0f;
     }
 
-    public void Setup(string name, string description)
+    public void Setup(int id, string name, string description)
     {
+        Id = id;
         Name = name;
         Description = description;
     }

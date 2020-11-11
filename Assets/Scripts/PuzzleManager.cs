@@ -27,7 +27,7 @@ public class PuzzleManager : MonoBehaviour
     private void Start()
     {
         var data = LoadJson(Path("Data"));
-        Debug.Log(JsonUtility.ToJson(data, true));
+        var id = 0;
 
         foreach (var x in data.items)
         {
@@ -35,15 +35,29 @@ public class PuzzleManager : MonoBehaviour
             var instance = Instantiate(prefab, x.position, Quaternion.identity);
             Instantiate(m_Minimap, x.position, Quaternion.identity);
 
-            instance.GetComponent<Treasure>().Setup(x.name, x.description);
+            instance.GetComponent<Treasure>().Setup(id++, x.name, x.description);
             if (x.locked) instance.AddComponent<LockToPoint>();
 
             var sprite = Resources.Load<Sprite>(Path(x.image));
-            m_Menu.AddItem(sprite, x.name);
+            m_Menu.CreateTreasure(sprite, x.name);
         }
+
+        Save.LoadGame();
+        foreach (var index in Save.FoundTreasures)
+            m_Menu.UpdateTreasure(index);
     }
 
-    public void PickUp(Treasure treasure) => m_Dialogue.PickUp(treasure);
+    private void OnApplicationQuit()
+    {
+        Save.SaveGame();
+    }
+
+    public void PickUp(Treasure treasure)
+    {
+        m_Dialogue.PickUp(treasure);
+        m_Menu.UpdateTreasure(treasure.Id);
+        Save.AddTreasure(treasure.Id);
+    }
 
     public void DetachFromHand() => m_Dialogue.DetachFromHand();
 
