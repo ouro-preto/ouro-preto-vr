@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField]
+    private Transform m_GridLayout = null;
+
+    [SerializeField]
+    private GameObject m_GridItem = null;
+
     [SerializeField]
     private float m_FixedHeight = 4f;
 
@@ -12,13 +19,13 @@ public class Menu : MonoBehaviour
     private Transform m_Camera;
     private bool m_Enabled = false;
 
-    void Start()
+    private void Start()
     {
         m_Canvas = transform.GetChild(0);
         m_Camera = Camera.main.transform;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -33,5 +40,14 @@ public class Menu : MonoBehaviour
             // Then set rotation to look at camera.
             transform.LookAt(m_Camera);
         }
+    }
+
+    public void AddItem(Sprite sprite, string label)
+    {
+        var instance = Instantiate(m_GridItem, m_GridLayout);
+        var image = instance.GetComponentInChildren<Image>();
+        var text = instance.GetComponentInChildren<Text>();
+        image.sprite = sprite;
+        text.text = label;
     }
 }
