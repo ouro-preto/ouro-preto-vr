@@ -15,7 +15,7 @@
         {
             "prefab": "B",
             "image": "png/002-treasure",
-            "locked": false,
+            "locked": true,
             "position": {
                 "x": -5,
                 "y": 0,
@@ -27,7 +27,7 @@
         {
             "prefab": "C",
             "image": "png/003-cannon",
-            "locked": false,
+            "locked": true,
             "position": {
                 "x": -5,
                 "y": 0,
@@ -39,7 +39,7 @@
         {
             "prefab": "D",
             "image": "png/004-helm",
-            "locked": false,
+            "locked": true,
             "position": {
                 "x": 5,
                 "y": 0,
