@@ -12,7 +12,7 @@ public class TextAnimation : MonoBehaviour
 
     private List<float> timestamps;
 
-    private void Start()
+    private void Awake()
     {
         // Get reference to TMPro component.
         textComponent = GetComponent<TMP_Text>();
