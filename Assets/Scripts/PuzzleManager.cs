@@ -3,16 +3,14 @@
 [DisallowMultipleComponent]
 public class PuzzleManager : MonoBehaviour
 {
-    const string k_FolderName = "TreasureHunt";
+    [SerializeField]
+    private TreasureInfo m_Dialogue = null;
 
     [SerializeField]
-    private Dialogue m_Dialogue;
+    private Menu m_Menu = null;
 
     [SerializeField]
-    private Menu m_Menu;
-
-    [SerializeField]
-    private GameObject m_Minimap;
+    private GameObject m_Minimap = null;
 
     public static PuzzleManager Instance { get; private set; }
 
@@ -26,19 +24,19 @@ public class PuzzleManager : MonoBehaviour
 
     private void Start()
     {
-        var data = LoadJson(Path("Data"));
+        var data = LoadJson("Data");
         var id = 0;
 
         foreach (var x in data.items)
         {
-            var prefab = Resources.Load(Path(x.prefab)) as GameObject;
-            var instance = Instantiate(prefab, x.position, Quaternion.identity);
+            var prefab = Resources.Load(x.prefab) as GameObject;
+            var instance = Instantiate(prefab, x.position, prefab.transform.rotation);
             Instantiate(m_Minimap, x.position, Quaternion.identity);
 
             instance.GetComponent<Treasure>().Setup(id++, x.name, x.description);
             if (x.locked) instance.AddComponent<LockToPoint>();
 
-            var sprite = Resources.Load<Sprite>(Path(x.image));
+            var sprite = Resources.Load<Sprite>(x.image);
             m_Menu.CreateTreasure(sprite, x.name);
         }
 
@@ -61,7 +59,12 @@ public class PuzzleManager : MonoBehaviour
 
     public void DetachFromHand() => m_Dialogue.DetachFromHand();
 
-    private static string Path(string path) => $"{k_FolderName}/{path}";
+    public void DeleteAchievements()
+    {
+        Save.Reset();
+        foreach (var index in Save.FoundTreasures)
+            m_Menu.UpdateTreasure(index);
+    }
 
     private static Data LoadJson(string filePath)
     {

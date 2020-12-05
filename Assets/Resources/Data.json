@@ -1,0 +1,101 @@
+{
+    "items": [
+        {
+            "prefab": "Skull",
+            "image": "png/025-skull-and-bones",
+            "locked": true,
+            "position": {
+                "x": -113,
+                "y": -12.5,
+                "z": -65
+                },
+            "name": "Crânio de Tiradentes",
+            "description": "O que aconteceu com a cabeça de Tiradentes é um dos mistérios de Ouro Preto."
+        },
+        {
+            "prefab": "Shoes",
+            "image": "png/013-wooden-leg",
+            "locked": true,
+            "position": {
+                "x": -18,
+                "y": -1.5,
+                "z": 14
+                },
+            "name": "Boba de Borba Gato",
+            "description": "Borba Gato, o capitão do mato, foi importante no início das descobertas das minas e especialmente na guerra dos emboabas."
+        },
+        {
+            "prefab": "A",
+            "image": "png/003-cannon",
+            "locked": true,
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": -10
+                },
+            "name": "Canhão",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "A",
+            "image": "png/004-helm",
+            "locked": true,
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": -10
+                },
+            "name": "Volante",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "A",
+            "image": "png/005-swords",
+            "locked": true,
+            "position": {
+                "x": 10,
+                "y": -0.5,
+                "z": 10
+                },
+            "name": "Espadas",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "A",
+            "image": "png/006-pistol",
+            "locked": true,
+            "position": {
+                "x": -10,
+                "y": -0.5,
+                "z": -10
+                },
+            "name": "Pistola",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "A",
+            "image": "png/007-compass",
+            "locked": true,
+            "position": {
+                "x": -10,
+                "y": -0.5,
+                "z": 10
+                },
+            "name": "Bússola",
+            "description": "Se liga na fundamentação histórica..."
+        },
+        {
+            "prefab": "A",
+            "image": "png/008-ship-in-a-bottle",
+            "locked": true,
+            "position": {
+                "x": 10,
+                "y": -0.5,
+                "z": -10
+                },
+            "name": "Navio na Garrafa",
+            "description": "Se liga na fundamentação histórica..."
+        }
+    ],
+    "prefabs": ["A", "A", "A", "A"]
+}

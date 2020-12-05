@@ -52,5 +52,6 @@ public class Save
     public static void Reset()
     {
         File.Delete(MyPath);
+        instance.foundTreasures.Clear();
     }
 }

@@ -1,32 +1,97 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections;
+using UnityEngine;
+using System.Text.RegularExpressions;
 
-[DisallowMultipleComponent]
 public class Dialogue : MonoBehaviour
 {
-    [SerializeField]
-    private Animator m_Animator = null;
+    // Store reference to target component.
+    [SerializeField] private TextAnimation m_Animation = null;
 
-    [SerializeField]
-    private Text m_Label = null;
+    // You must set text content on Editor.
+    [SerializeField, TextArea(5, 30)] private string m_Content = "";
 
-    [SerializeField]
-    private Text m_Content = null;
+    // Auxiliar members.
+    private string[] m_Pages;
+    private Coroutine m_Coroutine;
 
-    public void PickUp(Treasure treasure)
+    // These patterns are useful to correctly comprehend text content.
+    private static readonly string pageSeparator = "\n\n";
+    private static readonly string rowSeparator = "\n";
+
+    private void Start()
     {
-        // Adjust canvas UI content.
-        m_Label.text = treasure.Name;
-        m_Content.text = treasure.Description;
-        m_Animator.SetBool("Visible", true);
+        // Split text content by pages.
+        m_Pages = Regex.Split(m_Content, pageSeparator);
 
-        // Adjust transform position and rotation.
-        transform.position = treasure.transform.position;
-        transform.LookAt(Camera.main.transform);
+        // Set default text content.
+        m_Animation.Fill(m_Pages[0]);
     }
 
-    public void DetachFromHand()
+    private void OnTriggerEnter(Collider other)
     {
-        m_Animator.SetBool("Visible", false);
+        // If player is closer enough...
+        if (other.CompareTag("Player"))
+        {
+            // ...don't hesitate to start speaking with her/him!
+            m_Coroutine = StartCoroutine(Speak());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Whoops! Player gotta away from you.
+        if (other.CompareTag("Player"))
+        {
+            // Stop "speaking" coroutine.
+            StopCoroutine(m_Coroutine);
+
+            // Reset text content to default.
+            m_Animation.Fill(m_Pages[0]);
+        }
+    }
+
+    // This asynchronous task updates and
+    // animates text content dinamically.
+    private IEnumerator Speak()
+    {
+        // Loop through paginated content.
+        foreach (var page in m_Pages)
+        {
+            // Split current page by rows.
+            var rows = Regex.Split(page, rowSeparator);
+
+            // Clear content before write new page.
+            m_Animation.Clear();
+            
+            // Loop through each row.
+            foreach (var row in rows)
+            {
+                // Loop though each character.
+                foreach (var chr in row)
+                {
+                    yield return new WaitForEndOfFrame();
+
+                    // Append character to text animation.
+                    m_Animation.Append(chr);
+
+                    // Delay between character appending.
+                    yield return new WaitForSeconds(0.125f);
+                }
+
+                // Wait a moment before start to write a new row.
+                yield return new WaitForSeconds(0.5f);
+
+                // Finally append line break.
+                m_Animation.Append('\n');
+            }
+
+            // TODO fade-out
+
+            // Delay between page transition.
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        // Clear to show player dialogue have finished.
+        m_Animation.Clear();
     }
 }
