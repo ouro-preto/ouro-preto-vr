@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using Valve.VR.InteractionSystem;
 
+// This script was extract from SteamVR examples.
+// It locks the target game object on its start
+// position and rotation. Besides it simulates
+// an artificial gravitational field animation.
+
 [DisallowMultipleComponent]
 public class LockToPoint : MonoBehaviour
 {

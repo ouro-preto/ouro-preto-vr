@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 public class Dialogue : MonoBehaviour
 {
-    // Store reference to target component.
+    // Store a reference to target component.
     [SerializeField] private TextAnimation m_Animation = null;
 
     // You must set text content on Editor.
@@ -15,6 +15,9 @@ public class Dialogue : MonoBehaviour
     private Coroutine m_Coroutine;
 
     // These patterns are useful to correctly comprehend text content.
+    // So if a pageSeparator is found on editor input it must be
+    // treat as a page break. In a similar way if a rowSeparator
+    // is found on editor input it means a line break.
     private static readonly string pageSeparator = "\n\n";
     private static readonly string rowSeparator = "\n";
 
@@ -39,7 +42,7 @@ public class Dialogue : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // Whoops! Player gotta away from you.
+        // Whoops! Player got away from you.
         if (other.CompareTag("Player"))
         {
             // Stop "speaking" coroutine.
@@ -91,7 +94,8 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
 
-        // Clear to show player dialogue have finished.
+        // Clear content so player will notice
+        // dialogue have finished.
         m_Animation.Clear();
     }
 }
